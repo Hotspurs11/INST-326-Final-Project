@@ -1,5 +1,5 @@
 from random import shuffle
-class Card:
+class Shuff:
     """This class is responsble for dealing out the acrds to the players in the game. It should be able to deal to both human and computer players. this class will contain the deal function and the shuffle fucntion. The deal function will draw 2 cards
     for the dealer and deal 2 cards to the other player. The shuffle fucntion will shuffle the 52 card deck including the jokers to ensure randomness.
     Args: N/A
@@ -19,7 +19,7 @@ class Card:
         self.top = None
 
         for card in card_list:
-            new_card = self.Card(card)
+            new_card = self.Shuff(card)
             new_card.next = self.top
             self.top = new_card
 
