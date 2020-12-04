@@ -176,28 +176,56 @@ class Dealer(Player):
             self.signal_hit(self)
             handSum = self.card_sum
 
+class blackjack():
+        """
+        This class is responsible for determining the ending or winner of the game.
+        """
+          
+    def update():
+        """
+        store users scores from previous functions and intialize the balances of each player
+        args:
+            player_value(int): accumulates the balance of the player and updates its values    
+        return:
+            score(int): The current balance of the player and the hand
+        """
 
 
-def update():
-    """
-    store users scores from previous functions and intialize the balances of each player
-    args:
-        player1_score(int): the value of the score of the dealer from previous parts
-        player2_score(int): the value of the score of the player
-        
-    return:
-        int:  users current balance
-    """
-
-def endgame():
-    """
-    Compares the hand value to dealer value and presents a winner of the overall game
-    args:  
-        hand(int): stores hand value to dealer value    
-    returns:
-       list of str:  representation of the end balance of the player, indicaiting winner of game
-    Side Effects: 
-        modifies score   
-       
-    """
-    
+    def endgame(hand_value, player_value):
+        """
+        Compares the hand value to dealer value and presents a winner of the overall game
+        args:  
+            hand_value(int): The accumulated value of the hand 
+            player_value(int): The accumulated value of the player
+        returns:
+        list of str:  indicates the winner in each scenario based on value
+        Side Effects: 
+            modifies score   
+            
+        """
+        if score(hand_value) == 21:
+            print_results(hand_value,player_value)
+            print("you lost")
+        elif score(player_value) == 21:
+            print_results(hand_value, player_value)
+            print("you got blackjack")    
+        elif score(player_value) > 21:
+            print_results(hand_value, player_value)
+            print("you lost")
+        elif score(hand_value) > 21:
+            print_results(hand_value, player_value)
+            print("you won")
+        elif score(hand_value) < score(player_value): 
+            print_results(hand_value, player_value)
+            print("you won")  
+        elif score(hand_value) > score(player_value):
+            print_results(hand_value, player_value)
+            print("you lost")   
+     
+    def new_game():
+        """
+        Prompts user to choose whether to player another round or not and clears current session
+        args: self
+        returns:
+            prompt either to start or end game
+        """
