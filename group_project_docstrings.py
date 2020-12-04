@@ -66,7 +66,7 @@ class player():
     Side Effects: N/A '''             
     def __init__(self,balance,name,hand_value):
     ''' Defines variables of the player object
-    Args: N/A
+    Args: balance, name, hand_value
     Returns: N/A
     Raises: N/A
     Side Effects: N/A'''         
@@ -79,13 +79,13 @@ class player():
         Args: N/A
         Returns: N/A
         Raises: N/A
-        Side Effects: N/A '''         
+        Side Effects: Removes placed bet from balance losing round '''         
         self.balnce = self.balance - player
             
     def draw(self):
     ''' Draws 1 card to players hand
         Args: N/A
-        Returns: N/A
+        Returns: Returns new hand value after random card is drawn
         Raises: N/A
         Side Effects: N/A '''         
         new_card = Card()
@@ -94,10 +94,10 @@ class player():
     
     def bet(self,player_bet):
     ''' Bets amount specified by player
-        Args: N/A
+        Args: player_bet, bets desired amount inputted by user
         Returns: N/A
         Raises: N/A
-        Side Effects: N/A '''
+        Side Effects: Prints insufficient funds when player balance isn't enough '''
         if player_bet > self.balance:
             print('Insufficient funds.')
         else:
@@ -105,10 +105,10 @@ class player():
          
     def double_down(self,player_bet):
     ''' Doubles bet
-        Args: N/A
+        Args: player_bet
         Returns: N/A
         Raises: N/A
-        Side Effects: N/A '''
+        Side Effects: Prints insufficient funds when player balance isn't enough '''
         double_down2 = player_bet * 2
         if double_down2 < self.balance:
             print('insufficient funds.')
