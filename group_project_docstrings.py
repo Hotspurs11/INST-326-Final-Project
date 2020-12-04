@@ -57,46 +57,34 @@ def joker():
     Raises: N/A
     Side Effects: N/A
     """
-class Player:
-    ''' This class is responsible for the player. Anything that has to deal with the player. You can fold, bet, doubledown and draw with this class.
-    Args: N/A
-    Returns: N/A
-    Raises: N/A
-    Side Effects: N/A '''
-    def __init__(self, balance, name, handvalue):
-        ''' Defines variables of the player object
-        Args: N/A
-        Returns: N/A
-        Raises: N/A
-        Side Effects: N/A'''
-    def fold():
-        ''' Folds players hand
-        Args: N/A
-        Returns: N/A
-        Raises: N/A
-        Side Effects: N/A '''
+# Wilson's code
+class player():
+    def __init__(self,balance,name,hand_value):
+        self.balance = balance
+        self.name = name
+        self.hand_value = hand_value   
+        
+    def fold(self):
+        self.balnce = self.balance - player
+            
+    def draw(self):
+        new_card = preethascardclass()
+        self.hand_value = self.hand_value + new_card.value
+        return self.hand_value
     
-    def draw():
-        ''' Draws 1 card to players hand
-        Args: N/A
-        Returns: N/A
-        Raises: N/A
-        Side Effects: N/A '''
-        
-    def bet():
-        ''' Bets amount specified by player
-        Args: N/A
-        Returns: N/A
-        Raises: N/A
-        Side Effects: N/A '''
-        
-    def doubledown():
-        ''' Doubles bet
-        Args: N/A
-        Returns: N/A
-        Raises: N/A
-        Side Effects: N/A '''
-
+    def bet(self,player_bet):
+        if player_bet > self.balance:
+            print('Insufficient funds.')
+        else:
+            self.balance = self.balance - player_bet
+         
+    def double_down(self,player_bet):
+        double_down2 = player_bet * 2
+        if double_down2 < self.balance:
+            print('insufficient funds.')
+        else:
+            self.balance = self.balance - double_down2
+# end Wilson's code
 from random import shuffle
 class Shuff:
     """This class is responsble for dealing out the acrds to the players in the game. It should be able to deal to both human and computer players. this class will contain the deal function and the shuffle fucntion. The deal function will draw 2 cards
