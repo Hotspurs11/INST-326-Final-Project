@@ -1,4 +1,3 @@
-#Preethas Code
 class Card:
     """Card game. Assigns values for each card including number and suit
    Attributes:
@@ -60,26 +59,56 @@ def joker():
     """
 # Wilson's code
 class player():
+    ''' This class is responsible for the player. Anything that has to deal with the player. You can fold, bet, doubledown and draw with this class.
+    Args: N/A
+    Returns: N/A
+    Raises: N/A
+    Side Effects: N/A '''             
     def __init__(self,balance,name,hand_value):
+    ''' Defines variables of the player object
+    Args: N/A
+    Returns: N/A
+    Raises: N/A
+    Side Effects: N/A'''         
         self.balance = balance
         self.name = name
         self.hand_value = hand_value   
         
     def fold(self):
+    ''' Folds players hand
+        Args: N/A
+        Returns: N/A
+        Raises: N/A
+        Side Effects: N/A '''         
         self.balnce = self.balance - player
             
     def draw(self):
-        new_card = preethascardclass()
+    ''' Draws 1 card to players hand
+        Args: N/A
+        Returns: N/A
+        Raises: N/A
+        Side Effects: N/A '''         
+        new_card = Card()
         self.hand_value = self.hand_value + new_card.value
         return self.hand_value
     
     def bet(self,player_bet):
+    ''' Bets amount specified by player
+        Args: N/A
+        Returns: N/A
+        Raises: N/A
+        Side Effects: N/A '''
         if player_bet > self.balance:
             print('Insufficient funds.')
         else:
             self.balance = self.balance - player_bet
          
     def double_down(self,player_bet):
+    ''' Doubles bet
+        Args: N/A
+        Returns: N/A
+        Raises: N/A
+        Side Effects: N/A '''
         double_down2 = player_bet * 2
         if double_down2 < self.balance:
             print('insufficient funds.')
