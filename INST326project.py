@@ -10,7 +10,7 @@ class player():
         self.balnce = self.balance - player
             
     def draw(self):
-        new_card = Card()
+        new_card = preethascardclass()
         self.hand_value = self.hand_value + new_card.value
         return self.hand_value
     
