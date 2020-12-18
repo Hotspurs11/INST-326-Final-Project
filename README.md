@@ -1,2 +1,4 @@
 # INST-326-Final-Project
 #test
+https://dev.to/nexttech/build-a-blackjack-command-line-game-3o4b
+#this is the URL to the source we used that helped out interface. We realized some of thier iterators were throwing out errors. For example the source helped us out a tiny bit in the card class with that __repr__ function. Next in the Deck class it helped us with the __init__ method. Next in the player_game and Game class, this source helped us a lot with the interface and actually playing the game vs the dealer. Here is where we realized we had to change around some variables and iterators becasue of our player class and there were a lot of repates of variables. A lot of the logic and math behind the code is very common as blackjack has a rigid set of rules. Lastly the if __name__ = __main__ statement was taken from them so we could finally play the game!
