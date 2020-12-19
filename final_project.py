@@ -2,11 +2,9 @@ import doctest
 import random
 
 class Card:
-   """https://dev.to/nexttech/build-a-blackjack-command-line-game-3o4b this link is what helped us with the repr method in this class. This class is
-   responsible for assigning the values of the cards to the cards using the init mthod. we define the repr fucntion to 
-   how the card displayed would change"""
+  
     
-    def __init__(self, suit=0, rank=0):
+    def __init__(self, suit=0, value=0):
         """the __init__function here creates a value for each card and assign a suit
         Args: 
             suit(str): suit of the card
@@ -17,10 +15,10 @@ class Card:
         
         """    
         self.suit = suit
-        self.rank = rank
+        self.value = value
     def __repr__(self):
-    """returns the card that would change"""
-       return " of ".join((self.rank, self.suit))   
+        """returns the card that would change"""
+        return " of ".join((self.value, self.suit))   
 
 
 class Deck:
@@ -31,7 +29,7 @@ class Deck:
    suit(str) is the suit of the card"""
    
     def __init__(self):
-    """Assigns values to the card"""
+        """Assigns values to the card"""
         self.cards= [Card(types,numbers) for types in ["Spades", "Clubs", "Hearts", "Diamonds"] for numbers
                     in ["Ace", "2", "3","4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"]]
         
@@ -46,7 +44,7 @@ class Deck:
             raise RuntimeError
               
     def deal(self):
-      """this function will use th epop method to return the top card"""
+        """this function will use th epop method to return the top card"""
         if len(self.cards) > 1:
             return self.cards.pop()
             
@@ -65,7 +63,7 @@ class Player:
         Returns: N/A
         Raises: N/A
         Side Effects: N/A'''         
-        self.balance = balance
+        self.balance = int(balance)
         self.name = name
         self.hand_value = hand_value   
         self.foldround = False
@@ -88,10 +86,10 @@ class Player:
         Raises: N/A
         Side Effects: Prints insufficient funds when player balance isn't enough 
         '''
-        if player_bet > self.balance:
+        if int(player_bet) > self.balance:
             print('Insufficient funds.')
         else:
-            self.balance = self.balance - player_bet
+            self.balance = self.balance - int(player_bet)
          
     def double_down(self,player_bet):
         ''' Doubles bet of the player
@@ -108,7 +106,7 @@ class Player:
 
 
 class player_game:
-   """this function controls the rules of the game. the add card function will add a card to the list.
+    """this function controls the rules of the game. the add card function will add a card to the list.
    the calc function will calcculate the score of each players hand based off the rules of blackjack.
    https://dev.to/nexttech/build-a-blackjack-command-line-game-3o4b this link helped us with the calc, 
    add_card, value_display, show, and player_hand functions. we had to change around some variables in
@@ -120,16 +118,16 @@ class player_game:
         self.cards = []
         self.value = 0 
     def add_card(self, card):
-      """adds a card to the hand"""
+        """adds a card to the hand"""
         self.cards.append(card)
     
     def calc(self):
-         """rules of the game, fucntion will add the value of the card to the players hand"""
+        """rules of the game, fucntion will add the value of the card to the players hand"""
         self.value = 0
         contains_ace = False
         for card in self.cards:
-            if card.value.isnumeric():
-                self.value += int(card.value)
+            if isinstance(card.value, int):
+                self.value += isinstance(card.value, int)
             else:
                 if card.value == "A":
                     contains_ace = True
@@ -140,34 +138,34 @@ class player_game:
         if contains_ace and self.value > 21:
             self.value -= 10 
     def value_display(self):
-      """displays score
-      Returns: (Int)Score"""
+        """displays score
+        Returns: (Int)Score"""
         self.calc()
         return self.value
     
     def show(self):
-      """this fucntion is repsonsible for showing the hands and hiding the dealers hand"""
+        """this fucntion is repsonsible for showing the hands and hiding the dealers hand"""
         if self.dealer:
             print("face down card")
             print(self.cards[1])
             
     def player_hand(self):
-      """prints out the players hand"""
+        """prints out the players hand"""
         for s in self.cards:
             print(s)
         print("The Value is ", self.value_display())    
                   
 class Game:
-   """this function is the main game loop. its what interacts with the user by asking if they want to  play again or
-   what they want to do with thier turn. it will also indicate if w=either side got a blackjack.
-   https://dev.to/nexttech/build-a-blackjack-command-line-game-3o4b we used this link to help create the functions
-   of this class. We had to change around iterators because thier script had errors so we changed them."""
+    """this function is the main game loop. its what interacts with the user by asking if they want to  play again or
+    what they want to do with thier turn. it will also indicate if w=either side got a blackjack.
+    https://dev.to/nexttech/build-a-blackjack-command-line-game-3o4b we used this link to help create the functions
+    of this class. We had to change around iterators because thier script had errors so we changed them."""
     def __init__(self):
         pass
 
     def play_game(self):
-         """this fucntion will continue to deal and shuffle cards as long as the user wants to play.
-         if the user does not want to play then it ends the game"""
+        """this fucntion will continue to deal and shuffle cards as long as the user wants to play.
+        if the user does not want to play then it ends the game"""
         playing = True
 
         while playing:
@@ -249,9 +247,9 @@ class Game:
                 
                            
     def blackjack_results(self, player_blackjack, dealer_blackjack):
-      """indicates if dealer or player got a blackjack and will end that round of gameplay
-      Arguments: player_blackjack: Taking in the players choices, player get blackjack
-                 dealer_blackjack: Dealers get blackajck """
+        """indicates if dealer or player got a blackjack and will end that round of gameplay
+        Arguments: player_blackjack: Taking in the players choices, player get blackjack
+                    dealer_blackjack: Dealers get blackajck """
         if player_blackjack and dealer_blackjack:
             print("Both have blackjack")
 
@@ -267,13 +265,13 @@ class Game:
             self.player_hand.add_card(self.deck.deal())
             self.player_hand.player_hand()
     def player_is_over(self):
-      """indicates if the player is over the score of 21
-      Returns: If players score is over 21"""
+        """indicates if the player is over the score of 21
+        Returns: If players score is over 21"""
         return self.player_hand.value_display() > 21                        
                
     def check_blackjack(self):
-      """this function will check for a blackjack
-      Returns: If player won or dealer won"""
+        """this function will check for a blackjack
+        Returns: If player won or dealer won"""
         player = False
         dealer = False
         if self.player_hand.value_display() == 21:
@@ -284,5 +282,4 @@ class Game:
         return player, dealer 
 if __name__ == "__main__":
     game = Game()
-    game.play_game()                                  
-  
+    game.play_game()
