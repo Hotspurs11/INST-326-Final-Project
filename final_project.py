@@ -27,12 +27,11 @@ class Deck:
     
     """Card game. Assigns values for each card including number and suit. contians 52 unique cards needed to be shuffled using out shuffle and error
     functions. we use the pop fucntion of a list to return back the top card and remove it from the deck.
-    https://dev.to/nexttech/build-a-blackjack-command-line-game-3o4b this link helped us define the list.
-   Attributes:"""
    value(int) is the numerical value of the card
-   suit(str) is the suit of the card
-    """
+   suit(str) is the suit of the card"""
+   
     def __init__(self):
+    """Assigns values to the card"""
         self.cards= [Card(types,numbers) for types in ["Spades", "Clubs", "Hearts", "Diamonds"] for numbers
                     in ["Ace", "2", "3","4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"]]
         
@@ -141,7 +140,8 @@ class player_game:
         if contains_ace and self.value > 21:
             self.value -= 10 
     def value_display(self):
-      """displays score"""
+      """displays score
+      Returns: (Int)Score"""
         self.calc()
         return self.value
     
@@ -249,7 +249,9 @@ class Game:
                 
                            
     def blackjack_results(self, player_blackjack, dealer_blackjack):
-      """indicates if dealer or player got a blackjack and will end that round of gameplay"""
+      """indicates if dealer or player got a blackjack and will end that round of gameplay
+      Arguments: player_blackjack: Taking in the players choices, player get blackjack
+                 dealer_blackjack: Dealers get blackajck """
         if player_blackjack and dealer_blackjack:
             print("Both have blackjack")
 
@@ -265,11 +267,13 @@ class Game:
             self.player_hand.add_card(self.deck.deal())
             self.player_hand.player_hand()
     def player_is_over(self):
-      """indicates if the player is over the score of 21"""
+      """indicates if the player is over the score of 21
+      Returns: If players score is over 21"""
         return self.player_hand.value_display() > 21                        
                
     def check_blackjack(self):
-      """this function will check for a blackjack"""
+      """this function will check for a blackjack
+      Returns: If player won or dealer won"""
         player = False
         dealer = False
         if self.player_hand.value_display() == 21:
