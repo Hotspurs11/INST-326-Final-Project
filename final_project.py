@@ -1,7 +1,8 @@
 import sys
 import doctest
+from random import seed
+from random import randint
 import random
-
 class Card:
   
     
@@ -135,11 +136,12 @@ class player_game:
                 if card.value == "A":
                     contains_ace = True
                     self.value += 11
-                else:
-                    self.value += 10
+                else: 
+                    self.value += randint(2,10) 
+                    
 
-        if contains_ace and self.value > 21:
-            self.value -= 10 
+        if self.value > 21:
+            print("bust") 
     def value_display(self):
         """displays score
         Returns: (Int)Score"""
@@ -224,14 +226,18 @@ class Game:
             print("Dealer's Cards: ", dealer_value)
             if player_value > 21 and dealer_value <= 21:
                 print("Sorry you lost, Dealers wins")
-            elif player_value >= 21 and dealer_value > 21:
+            elif player_value <= 21 and dealer_value > 21:
                 print("You won the game!")
                 if doubledown == 1:
                     player.balance += bet*4
                 else:
                     player.balance += bet*2
-            else:
-                print("You tied with Dealer")
+            elif player_value < dealer_value:
+                print("you lost the game")
+            elif player_value == dealer_value:
+                print("you tied with the dealer")
+            elif player_value > dealer_value:
+                print("you won the game!")           
                 
             play_again = int(input("Would you like to play again? Enter 1 for Yes or 0 for No. "))
             if play_again == 0:
@@ -282,4 +288,4 @@ class Game:
         return player, dealer 
 if __name__ == "__main__":
     game = Game()
-    game.play_game()
+    game.play_game()              
