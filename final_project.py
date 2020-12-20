@@ -1,3 +1,4 @@
+import sys
 import doctest
 import random
 
@@ -88,6 +89,7 @@ class Player:
         '''
         if int(player_bet) > self.balance:
             print('Insufficient funds.')
+            sys.exit()
         else:
             self.balance = self.balance - int(player_bet)
          
@@ -98,9 +100,10 @@ class Player:
         Raises: N/A
         Side Effects: Prints insufficient funds when player balance isn't enough 
         '''
-        double_down2 = player_bet * 2
-        if double_down2 < self.balance:
+        double_down2 = int(player_bet) * 2
+        if double_down2 > self.balance:
             print('insufficient funds.')
+            sys.exit()
         else:
             self.balance = self.balance - double_down2
 
@@ -167,85 +170,82 @@ class Game:
         """this fucntion will continue to deal and shuffle cards as long as the user wants to play.
         if the user does not want to play then it ends the game"""
         playing = True
+        print('What is your name?')
+        name = input()
+        print('How much money will you like to start with?')
+        balance = input()
+        self.player_hand = player_game()
+        self.dealer_hand = player_game(dealer=True)
+        
+        player = Player(balance, name, self.player_hand.value_display())
+        print('How much would you like to bet?')
+        bet = input()
+        player.bet(bet)
+        
+        print('Do you want to doubledown? Enter 1 for yes, 0 for no.')
+        doubledown = int(input())    
 
-        while playing:
+        temp = False
+        while not temp:
             self.deck = Deck()
             self.deck.shuffle()
-
-            self.player_hand = player_game()
-            self.dealer_hand = player_game(dealer=True)
-
             for _ in range(2):
                 self.player_hand.add_card(self.deck.deal())
                 self.dealer_hand.add_card(self.deck.deal())
-
+                   
             print("Current hand: ", self.player_hand.value_display())
             print("Current Dealers hand: ", self.dealer_hand.value_display())
-            end_game = False
-            
-            print('What is your name?')
-            name = input()
-            print('How much money will you like to start with?')
-            balance = input()
-            player = Player(balance, name, self.player_hand.value_display())
-            print('How much would you like to bet?')
-            bet = input()
-            player.bet(bet)
-            
-
-        while not end_game:
+            temp2 = False
+            while not temp2: 
+                print('Do you want to fold? (Stop drawing cards) Enter 1 for yes or 0 for no.')
+                fold = int(input())
+                if fold == 1:
+                    player.foldround = True
+                    temp2 = True
+                else:
+                    player.foldround = False
+                    self.player_hand.add_card(self.deck.deal())
+                    print("Current hand: ", self.player_hand.value_display())
+                    print("Current Dealers hand: ", self.dealer_hand.value_display())
+                    
             player_has_blackjack, dealer_has_blackjack = self.check_blackjack()
-            print('Do you want to fold? (Stop drawing cards) Enter 1 for yes or 0 for no.')
-            fold = int(input())
-            if fold == 1:
-                player.foldround = True
+            if player_has_blackjack or dealer_has_blackjack:
+                temp = True
+                self.blackjack_results(
+                    player_has_blackjack, dealer_has_blackjack) 
+            if doubledown == 1:
+                    player.double_down(int(bet))
+
+            player_value = self.player_hand.value_display()
+            dealer_value = self.dealer_hand.value_display()
+
+            print("End Results: ")
+            print("Your Cards: ", player_value)
+            print("Dealer's Cards: ", dealer_value)
+            if player_value > 21 and dealer_value <= 21:
+                print("Sorry you lost, Dealers wins")
+            elif player_value >= 21 and dealer_value > 21:
+                print("You won the game!")
+                if doubledown == 1:
+                    player.balance += bet*4
+                else:
+                    player.balance += bet*2
             else:
-                player.foldround = False
-                print('Do you want to doubledown? Enter 1 for yes, 0 for no.')
-                doubledown = int(input())
-            
-            
+                print("You tied with Dealer")
                 
-       
-        if player_has_blackjack or dealer_has_blackjack:
-            end_game = True
-            self.blackjack_results(
-                player_has_blackjack, dealer_has_blackjack) 
-        if doubledown == 1:
-                self.player_hand.add_card(self.deck.deal())
-                player.double_down(bet)
-        if self.player_is_over():
-                        print("You have lost!")
-                        end_game = True
-        else:
-                    player_value = self.player_hand.value_display()
-                    dealer_value = self .dealer_hand.value_display()
-
-                    print("End Results: ")
-                    print("Your Cards: ", player_value)
-                    print("Dealer's Cards: ", dealer_value)
-
-                    if player_value > dealer_value:
-                        print("You won the game!")
-                        if doubledown == 1:
-                            player.balance += bet*4
-                        else:
-                            player.balance += bet*2
-                    elif player_value == dealer_value:
-                        print("You tied with Dealer")
-                    else:
-                        print("Sorry you lost, Dealers wins")
-                    end_game = True
-        play_again = input("Would you like to play again? Write Yes or No ")
-        while play_again.lower() not in ["Yes", "No"]:
-            play_again = input(" Enter Yes or No ")
-        if play_again.lower() == "No":
-            print("Thank you for playing, play again soon!")
-            playing = False
-        else:
-            end_game = False                
-                
-                           
+            play_again = int(input("Would you like to play again? Enter 1 for Yes or 0 for No. "))
+            if play_again == 0:
+                print("Thank you for playing, play again soon!")
+                print('Your ending balance is ', player.balance)
+                temp = True                    
+            else:
+                print('Your current balance is ', player.balance)
+                self.player_hand = player_game()
+                self.dealer_hand = player_game(dealer=True)
+                self.deck = Deck()
+                self.deck.shuffle()
+                temp = False
+                                          
     def blackjack_results(self, player_blackjack, dealer_blackjack):
         """indicates if dealer or player got a blackjack and will end that round of gameplay
         Arguments: player_blackjack: Taking in the players choices, player get blackjack
