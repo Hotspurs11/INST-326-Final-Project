@@ -1,7 +1,7 @@
 """Tests blackjack project code"""
-from final_project import Game
-from final_project import Player
-from final_project import player_game
+from project import Game
+from project import Player
+from project import player_game
 import pytest
 def test_bet():
     temp = Player(5000, 'George', 4)
@@ -28,3 +28,4 @@ def test_check_blackjack():
         assert check_blackjack() == True, False
     if p_g.player_hand() == 21:
         assert check_blackjack() == False, True
+
