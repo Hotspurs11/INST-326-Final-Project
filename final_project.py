@@ -77,7 +77,7 @@ class Player:
         Raises: N/A
         Side Effects: Removes placed bet from balance losing round 
         '''         
-        return self.fold
+        return self.foldround
         
             
     

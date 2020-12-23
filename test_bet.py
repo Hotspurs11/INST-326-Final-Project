@@ -1,7 +1,7 @@
 """Tests blackjack project code"""
-from project import Game
-from project import Player
-from project import player_game
+from final_project import Game
+from final_project import Player
+from final_project import player_game
 import pytest
 def test_bet():
     temp = Player(5000, 'George', 4)
